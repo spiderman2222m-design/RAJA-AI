@@ -1,0 +1,431 @@
+{
+  "entities": {
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Authorized administrator registry entry.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 256
+        },
+        "grantedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "grantedBy", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account, subscription tier, language preference, and usage counters.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "admin"]
+        },
+        "plan": {
+          "type": "string",
+          "enum": ["free", "premium_monthly", "premium_yearly"]
+        },
+        "subscriptionStatus": {
+          "type": "string",
+          "enum": ["active", "cancelled", "expired"]
+        },
+        "subscriptionBillingCycle": {
+          "type": "string",
+          "enum": ["none", "monthly", "yearly"]
+        },
+        "subscriptionExpiresAt": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "lastPaymentId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "enum": ["en", "hi", "gu"]
+        },
+        "usage": {
+          "type": "object",
+          "description": "Per-feature usage counters"
+        },
+        "isBlocked": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "displayName",
+        "photoURL",
+        "role",
+        "plan",
+        "subscriptionStatus",
+        "subscriptionBillingCycle",
+        "subscriptionExpiresAt",
+        "lastPaymentId",
+        "preferredLanguage",
+        "usage",
+        "isBlocked",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "AI conversation thread owned by a user.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["chat", "voice", "writer", "code", "translate"]
+        },
+        "language": {
+          "type": "string",
+          "enum": ["en", "hi", "gu"]
+        },
+        "messageCount": {
+          "type": "integer"
+        },
+        "lastMessagePreview": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "title",
+        "mode",
+        "language",
+        "messageCount",
+        "lastMessagePreview",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Single message inside a conversation subcollection.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "conversationId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant"]
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50000
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["chat", "voice", "writer", "code", "translate"]
+        },
+        "language": {
+          "type": "string",
+          "enum": ["en", "hi", "gu"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "conversationId",
+        "userId",
+        "role",
+        "content",
+        "mode",
+        "language",
+        "createdAt"
+      ]
+    },
+    "Creation": {
+      "title": "Creation",
+      "description": "Generated image or video studio artifact.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["image", "video"]
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "mediaUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "aspectRatio": {
+          "type": "string",
+          "maxLength": 16
+        },
+        "status": {
+          "type": "string",
+          "enum": ["completed", "failed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "type",
+        "prompt",
+        "mediaUrl",
+        "aspectRatio",
+        "status",
+        "createdAt"
+      ]
+    },
+    "PaymentRecord": {
+      "title": "PaymentRecord",
+      "description": "Verified subscription payment record.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "plan": {
+          "type": "string",
+          "enum": ["premium_monthly", "premium_yearly"]
+        },
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "enum": ["INR", "USD"]
+        },
+        "provider": {
+          "type": "string",
+          "enum": ["razorpay_verified", "stripe_verified", "upi_verified"]
+        },
+        "transactionRef": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 128
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 256
+        },
+        "status": {
+          "type": "string",
+          "enum": ["verified"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "plan",
+        "amount",
+        "currency",
+        "provider",
+        "transactionRef",
+        "signature",
+        "status",
+        "createdAt"
+      ]
+    },
+    "AppSettings": {
+      "title": "AppSettings",
+      "description": "Global platform usage limits and subscription pricing.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "freeLimits": {
+          "type": "object",
+          "description": "Free tier quota limits per feature"
+        },
+        "monthlyPriceInr": {
+          "type": "number"
+        },
+        "yearlyPriceInr": {
+          "type": "number"
+        },
+        "merchantUpiId": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 120
+        },
+        "updatedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "freeLimits",
+        "monthlyPriceInr",
+        "yearlyPriceInr",
+        "merchantUpiId",
+        "updatedBy",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/admins/{adminUid}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Admin role grants"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profiles, subscription tiers, and feature usage counts"
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "User AI chat and tool conversations"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Messages inside a conversation"
+    },
+    "/creations/{creationId}": {
+      "schema": { "$ref": "#/entities/Creation" },
+      "description": "Generated image and video records"
+    },
+    "/payments/{paymentId}": {
+      "schema": { "$ref": "#/entities/PaymentRecord" },
+      "description": "Verified payment transactions for premium plans"
+    },
+    "/app_settings/{settingId}": {
+      "schema": { "$ref": "#/entities/AppSettings" },
+      "description": "Global platform limits and pricing controlled by admin"
+    }
+  }
+}

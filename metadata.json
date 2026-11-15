@@ -1,0 +1,6 @@
+{
+  "name": "APNA RAJA AI",
+  "description": "APNA RAJA AI — Your Personal AI Assistant with multilingual chat, voice replies, content studio, code assistant, translation, image & video generation, and admin controls.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
